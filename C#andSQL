@@ -1,0 +1,70 @@
+using System;
+using System.Data.SqlClient;
+
+namespace Fazenda_PIM2024
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Digite seu nome:");
+            string nome = Console.ReadLine();
+
+            Console.WriteLine("Digite seu CPF:");
+            string cpf = Console.ReadLine();
+
+            Console.WriteLine("Digite seu e-mail:");
+            string email = Console.ReadLine();
+
+            Console.WriteLine("Digite sua senha (A Senha Deve Conter no Mínimo 8 Caracteres):");
+            string senha = Console.ReadLine();
+
+            Console.WriteLine("Digite seu telefone celular:");
+            string telefoneCelular = Console.ReadLine();
+
+            Console.WriteLine("Digite seu telefone residencial (opcional):");
+            string telefoneResidencial = Console.ReadLine();
+
+            Console.WriteLine("Digite seu telefone comercial (opcional):");
+            string telefoneComercial = Console.ReadLine();
+
+            Console.WriteLine("Digite seu endereço:");
+            string endereco = Console.ReadLine();
+
+            Console.WriteLine("Pressione Enter para salvar...");
+
+            // Aguardando o pressionamento da tecla Enter
+            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+
+            // Salvar os dados no banco de dados
+            SalvarCliente(nome, cpf, email, senha, telefoneCelular, telefoneResidencial, telefoneComercial, endereco);
+
+            Console.WriteLine("Cadastrado com sucesso!");
+            Console.ReadLine();
+        }
+
+        static void SalvarCliente(string nome, string cpf, string email, string senha, string telefoneCelular, string telefoneResidencial, string telefoneComercial, string endereco)
+        {
+            string connectionString = @"Data Source=SAMSUMG-LEO15\SQLSERVER2022;Initial Catalog=DB_Fazenda;Integrated Security=True";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO CLIENTE (NOME, CPF, EMAIL, SENHA, TELEFONE_CELULAR, TELEFONE_RESIDENCIAL, TELEFONE_COMERCIAL, ENDERECO)
+                                VALUES (@Nome, @Cpf, @Email, @Senha, @TelefoneCelular, @TelefoneResidencial, @TelefoneComercial, @Endereco)";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Nome", nome);
+                command.Parameters.AddWithValue("@Cpf", cpf);
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Senha", senha);
+                command.Parameters.AddWithValue("@TelefoneCelular", telefoneCelular);
+                command.Parameters.AddWithValue("@TelefoneResidencial", string.IsNullOrEmpty(telefoneResidencial) ? (object)DBNull.Value : telefoneResidencial);
+                command.Parameters.AddWithValue("@TelefoneComercial", string.IsNullOrEmpty(telefoneComercial) ? (object)DBNull.Value : telefoneComercial);
+                command.Parameters.AddWithValue("@Endereco", string.IsNullOrEmpty(endereco) ? (object)DBNull.Value : endereco);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+}
