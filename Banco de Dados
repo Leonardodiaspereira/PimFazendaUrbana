@@ -68,7 +68,10 @@ INSERT INTO PRODUTO(ID_PRODUTO,NOME,PREÇO,ESTOQUE) VALUES (23,'Uva passa 10Kg',
 INSERT INTO PRODUTO(ID_PRODUTO,NOME,PREÇO,ESTOQUE) VALUES (24,'Uva passa 20Kg',500,8);
 INSERT INTO PRODUTO(ID_PRODUTO,NOME,PREÇO,ESTOQUE) VALUES (25,'Uva passa 50Kg',1000,10);
 
-## Após reunião do grupo para ajustes, acrescentamos mais uma coluna na tabela CLIENTE com o nome de SENHA, criamos e configuramos com os seguintes comandos:
+## Após reunião do grupo para ajustes, acrescentamos mais uma coluna na tabela CLIENTE com o nome de SENHA e altermaos o nome da coluna CPF para CPF_CNPJ
+criamos e configuramos com os seguintes comandos:
+
+## Ajustes feitos para acrescentar a coluna SENHA:
 
 ALTER TABLE CLIENTE
 ADD SENHA VARCHAR(50);
@@ -81,4 +84,7 @@ ADD CONSTRAINT DF_SENHA DEFAULT 'senha_padrao' FOR SENHA;
 ALTER TABLE CLIENTE
 ADD CONSTRAINT CHK_SENHA_LENGTH CHECK (LEN(SENHA) >= 8);
 
+## Ajustes feitos para alterar o nome da coluna CPF para CPF_CNPJ:
 
+
+EXEC sp_rename 'CLIENTE.CPF', 'CPF_CNPJ', 'COLUMN';
