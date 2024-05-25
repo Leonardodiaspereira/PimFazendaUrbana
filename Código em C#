@@ -7,28 +7,28 @@ namespace Fazenda_PIM2024
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Digite seu nome:");
+            Console.WriteLine("Nome:");
             string nome = Console.ReadLine();
 
-            Console.WriteLine("Digite seu CPF:");
+            Console.WriteLine("CPF/CNPJ (Somente Números):");
             string cpf = Console.ReadLine();
 
-            Console.WriteLine("Digite seu e-mail:");
+            Console.WriteLine("Digite o e-mail:");
             string email = Console.ReadLine();
 
-            Console.WriteLine("Digite sua senha (A Senha Deve Conter no Mínimo 8 Caracteres):");
+            Console.WriteLine("Digite a senha:");
             string senha = Console.ReadLine();
 
-            Console.WriteLine("Digite seu telefone celular:");
+            Console.WriteLine("Digite o telefone celular:");
             string telefoneCelular = Console.ReadLine();
 
-            Console.WriteLine("Digite seu telefone residencial (opcional):");
+            Console.WriteLine("Digite o telefone residencial (opcional):");
             string telefoneResidencial = Console.ReadLine();
 
-            Console.WriteLine("Digite seu telefone comercial (opcional):");
+            Console.WriteLine("Digite o telefone comercial (opcional):");
             string telefoneComercial = Console.ReadLine();
 
-            Console.WriteLine("Digite seu endereço:");
+            Console.WriteLine("Digite o endereço:");
             string endereco = Console.ReadLine();
 
             Console.WriteLine("Pressione Enter para salvar...");
@@ -49,7 +49,7 @@ namespace Fazenda_PIM2024
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = @"INSERT INTO CLIENTE (NOME, CPF, EMAIL, SENHA, TELEFONE_CELULAR, TELEFONE_RESIDENCIAL, TELEFONE_COMERCIAL, ENDERECO)
+                string query = @"INSERT INTO CLIENTE (NOME, CPF_CNPJ, EMAIL, SENHA, TELEFONE_CELULAR, TELEFONE_RESIDENCIAL, TELEFONE_COMERCIAL, ENDERECO)
                                 VALUES (@Nome, @Cpf, @Email, @Senha, @TelefoneCelular, @TelefoneResidencial, @TelefoneComercial, @Endereco)";
 
                 SqlCommand command = new SqlCommand(query, connection);
